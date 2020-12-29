@@ -6,6 +6,7 @@ using eShopSolution.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data.Configurations;
 using Shopping.Data.Entities;
+using Shopping.Data.Extension;
 
 namespace Shopping.Data.EF
 {
@@ -16,6 +17,7 @@ namespace Shopping.Data.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure using FluentApi
             modelBuilder.ApplyConfiguration(new CartConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
@@ -32,8 +34,9 @@ namespace Shopping.Data.EF
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
+            //data seeding
+            modelBuilder.Seed();
             //base.OnModelCreating(modelBuilder);
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
