@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data.Entities;
 using Shopping.Data.Enum;
@@ -83,6 +84,38 @@ namespace Shopping.Data.Extension
             modelBuilder.Entity<ProductInCategory>().HasData(
                 new ProductInCategory() { ProductId = 1, CategoryId = 1 }
                 );
+            //id admin
+            const string ADMIN_ID = "E1A529CF-41CE-46A1-A155-453DD775CCA2";
+            //id role admin
+            const string ROLE_ID = "A47FC389-8774-4625-B373-DF35334A2606";
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole()
+                {
+                    Id = new Guid(ROLE_ID),
+                    Name = "admin",
+                    NormalizedName = "admin",
+                    Description = "Administrator role",
+                });
+            var hasher = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser()
+                {
+                    Id = new Guid(ADMIN_ID),
+                    FristName = "Viet",
+                    LastName = "Anh",
+                    UserName = "admin",
+                    DoB = new DateTime(2001, 09, 09),
+                    Email = "anhnguyenviet11299@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "123456"),
+                    SecurityStamp = string.Empty,
+            });
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
+                new IdentityUserRole<Guid>()
+                {
+                    RoleId = new Guid(ROLE_ID),
+                    UserId = new Guid(ADMIN_ID),
+                });
         }
     }
 }
