@@ -13,5 +13,6 @@ namespace Shopping.Data.Entities
         public Guid UserId { get; set; }
         public Product Product { get; set; }
         public DateTime DateCreate { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
