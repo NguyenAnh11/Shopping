@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopping.Data\Shopping.Data.csproj" />
     <ProjectReference Include="..\Shopping.Utilities\Shopping.Utilities.csproj" />
+    <ProjectReference Include="..\Shopping.ViewModel\Shopping.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
