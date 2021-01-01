@@ -17,5 +17,6 @@ namespace Shopping.Data.Entities
 
         public List<Cart> Carts { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
     }
 }

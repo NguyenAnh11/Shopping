@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Shopping.ViewModel.Catalog.Products.Dtos.Manage;
+using Shopping.ViewModel.Common.Dtos;
+using Shopping.ViewModel.Products.Dtos;
 using System.Threading.Tasks;
-using Shopping.Application.Catalog.Products.Dtos;
-using Shopping.Application.Catalog.Products.Dtos.Manage;
-using Shopping.Application.Dtos;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Shopping.Application.Catalog.Products
 {
@@ -17,5 +16,9 @@ namespace Shopping.Application.Catalog.Products
         Task<bool> UpdateStock(int productId, int newQuantity);
         Task AddViewCount(int productId);
         Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<int> AddImages(int productId, List<IFormFile> files);
+        Task<int> RemoveImage(int imageId);
+        Task<int> UpdateImage(int imageId, string caption, bool isDefault,int? sortOrder);
+        Task<PageResult<ProductImageViewModel>> GetListImage(GetProductImagePagingRequest request);
     }
 }
