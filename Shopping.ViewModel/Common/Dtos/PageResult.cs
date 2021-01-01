@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shopping.Application.Dtos
+namespace Shopping.ViewModel.Common.Dtos
 {
     public class PageResult<T> where T: class
     {
         public int TotalRecord { get; set; }
         
-        public IEnumerable<T> Items { get; set; }
+        public List<T> Items { get; set; }
     }
 }

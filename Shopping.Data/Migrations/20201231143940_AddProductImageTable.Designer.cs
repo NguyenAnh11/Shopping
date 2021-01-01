@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopping.Data.EF;
 
 namespace Shopping.Data.Migrations
 {
     [DbContext(typeof(ShoppingDBContext))]
-    partial class ShoppingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201231143940_AddProductImageTable")]
+    partial class AddProductImageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +183,7 @@ namespace Shopping.Data.Migrations
                         new
                         {
                             Id = new Guid("a47fc389-8774-4625-b373-df35334a2606"),
-                            ConcurrencyStamp = "c02ef2ca-9e05-4ac2-987d-4d06e5378041",
+                            ConcurrencyStamp = "1b2eced7-177f-496a-aba0-57b57bef5049",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -258,14 +260,14 @@ namespace Shopping.Data.Migrations
                         {
                             Id = new Guid("e1a529cf-41ce-46a1-a155-453dd775cca2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e0890e8d-9dcd-4f28-8e1f-f8878f391be3",
+                            ConcurrencyStamp = "173ba8fe-2774-4e44-ab17-88c003856593",
                             DoB = new DateTime(2001, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "anhnguyenviet11299@gmail.com",
                             EmailConfirmed = true,
                             FristName = "Viet",
                             LastName = "Anh",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAED3ViZ2SEPBstRKWfUxZi677BMMhz5tmkUvrrdBo4Kh1NeK2p//d4Y6WLMPWKO3xDw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOUteMCM7MCp2yzvMlngF2KwYID20LbZNedP2Afy5y0gceZSKpvYXYsG/yf47bhkmQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -610,7 +612,7 @@ namespace Shopping.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2021, 1, 1, 20, 58, 13, 320, DateTimeKind.Local).AddTicks(7124),
+                            DateCreated = new DateTime(2020, 12, 31, 21, 39, 33, 239, DateTimeKind.Local).AddTicks(406),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,
@@ -635,8 +637,8 @@ namespace Shopping.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
