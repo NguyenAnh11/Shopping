@@ -2,9 +2,8 @@
 using Shopping.Data.EF;
 using Shopping.Data.Entities;
 using Shopping.Utilities.Exceptions;
-using Shopping.ViewModel.Catalog.Products.Dtos.Manage;
-using Shopping.ViewModel.Common.Dtos;
-using Shopping.ViewModel.Products.Dtos;
+using Shopping.ViewModel.Catalog.Products;
+using Shopping.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +91,7 @@ namespace Shopping.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request)
+        public async Task<PageResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             string key = request.keyword.ToLower();
             //1. Select join
