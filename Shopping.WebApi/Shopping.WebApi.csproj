@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopping.Application\Shopping.Application.csproj" />
+    <ProjectReference Include="..\Shopping.Data\Shopping.Data.csproj" />
+    <ProjectReference Include="..\Shopping.Utilities\Shopping.Utilities.csproj" />
+    <ProjectReference Include="..\Shopping.ViewModel\Shopping.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

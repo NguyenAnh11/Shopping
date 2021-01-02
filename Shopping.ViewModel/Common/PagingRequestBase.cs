@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shopping.ViewModel.Common.Dtos
+namespace Shopping.ViewModel.Common
 {
     public class PagingRequestBase
     {
