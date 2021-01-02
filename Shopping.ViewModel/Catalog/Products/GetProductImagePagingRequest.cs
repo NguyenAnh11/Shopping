@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Shopping.ViewModel.Common.Dtos;
+using Shopping.ViewModel.Common;
 
-namespace Shopping.ViewModel.Catalog.Products.Dtos.Manage
+namespace Shopping.ViewModel.Catalog.Products
 {
     public class GetProductImagePagingRequest:PagingRequestBase
     {

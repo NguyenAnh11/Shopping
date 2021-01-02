@@ -1,6 +1,5 @@
-﻿using Shopping.ViewModel.Catalog.Products.Dtos.Public;
-using Shopping.ViewModel.Common.Dtos;
-using Shopping.ViewModel.Products.Dtos;
+﻿using Shopping.ViewModel.Catalog.Products;
+using Shopping.ViewModel.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +9,8 @@ namespace Shopping.Application.Catalog.Products
 {
     public interface IPublicProductService
     {
-        Task<PageResult<ProductViewModel>> GetAllByCategoryId(GetProductPagingRequest request);
+        Task<PageResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request);
+
+        Task<List<ProductViewModel>> GetAll();
     }
 }

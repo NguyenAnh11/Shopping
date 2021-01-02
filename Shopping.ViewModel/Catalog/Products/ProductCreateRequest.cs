@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 
-namespace Shopping.ViewModel.Catalog.Products.Dtos.Manage
+namespace Shopping.ViewModel.Catalog.Products
 {
     public class ProductCreateRequest
     {
