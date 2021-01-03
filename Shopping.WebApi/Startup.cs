@@ -12,6 +12,7 @@ using Shopping.Data.EF;
 using Shopping.Utilities.Constants;
 using Shopping.Application.Catalog.Products;
 using Microsoft.OpenApi.Models;
+using Shopping.Application.Catalog.Common;
 
 namespace Shopping.WebApi
 {
@@ -29,6 +30,8 @@ namespace Shopping.WebApi
                 option.UseSqlServer(Configuration.GetConnectionString(SystemConstant.MainConnectionString));
             });
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo()
