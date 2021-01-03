@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.WebApp", "Shopping.WebApp\Shopping.WebApp.csproj", "{DB12FD2A-1FDD-455B-AA93-F2A003F56DB9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0062E6E8-F6AF-4C82-89FF-9034797469B1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{0062E6E8-F6AF-4C82-89FF-9034797469B1}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -18,7 +18,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Utilities", "Shopp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.ViewModel", "Shopping.ViewModel\Shopping.ViewModel.csproj", "{9B72E2B0-2810-4ADF-8F8C-DF4C1FFDF5C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.WebApi", "Shopping.WebApi\Shopping.WebApi.csproj", "{E0A0AE87-CE56-4677-8813-63E4D2A15CE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.WebApi", "Shopping.WebApi\Shopping.WebApi.csproj", "{E0A0AE87-CE56-4677-8813-63E4D2A15CE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Domain", "1.Domain", "{CB851E80-9BE7-452F-B0DD-76CA1B665E6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Host", "3.Host", "{66B7702A-6421-4DC6-9A83-E9DA5A75BE09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Infrastructure", "2.Infrastructure", "{6A5A9DC2-18AE-47CB-A4C0-DDE6F87D0A7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB12FD2A-1FDD-455B-AA93-F2A003F56DB9} = {66B7702A-6421-4DC6-9A83-E9DA5A75BE09}
+		{98A77291-03C6-4840-9790-DA252FF9D504} = {CB851E80-9BE7-452F-B0DD-76CA1B665E6E}
+		{C4554E9E-92C7-4254-9498-DB55B53ED6DF} = {CB851E80-9BE7-452F-B0DD-76CA1B665E6E}
+		{54534C2C-09EE-4500-A51E-695C2DEC4A2B} = {6A5A9DC2-18AE-47CB-A4C0-DDE6F87D0A7C}
+		{9B72E2B0-2810-4ADF-8F8C-DF4C1FFDF5C5} = {6A5A9DC2-18AE-47CB-A4C0-DDE6F87D0A7C}
+		{E0A0AE87-CE56-4677-8813-63E4D2A15CE7} = {66B7702A-6421-4DC6-9A83-E9DA5A75BE09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0FDF057-CA40-41FD-98F2-32871C6B5657}
