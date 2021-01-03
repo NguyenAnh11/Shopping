@@ -10,7 +10,7 @@ namespace Shopping.Application.Catalog.Common
     public class FileStorageService : IStorageService
     {
         private readonly string _userContentFolder;
-        private const string USER_CONTENT_FOLDER_NAME = "user_content";
+        private const string USER_CONTENT_FOLDER_NAME = "image";
         public FileStorageService(IWebHostEnvironment env)
         {
             _userContentFolder = Path.Combine(env.WebRootPath, USER_CONTENT_FOLDER_NAME);
@@ -29,8 +29,8 @@ namespace Shopping.Application.Catalog.Common
         }
         public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)
         {
-            string fileFolder = Path.Combine(_userContentFolder, fileName);
-            using (var stream = new FileStream(fileFolder, FileMode.Create))
+            string filePath = Path.Combine(_userContentFolder, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await mediaBinaryStream.CopyToAsync(stream);
             }

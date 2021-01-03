@@ -17,43 +17,22 @@ namespace Shopping.Application.Catalog.Products
         {
             _context = context;
         }
-
-        public async Task<List<ProductViewModel>> GetAll()
+        public async Task<PageResult<ProductViewModel>> GetAllByCategoryId(string languageId,GetPublicProductPagingRequest request)
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
                         select new { p, pt, pic };
-            var data = await query
-                            .Select(x => new ProductViewModel()
-                            {
-                                Id = x.p.Id,
-                                Price = x.p.Price,
-                                OriginalPrice = x.p.Price,
-                                Stock = x.p.Stock,
-                                ViewCount = x.p.ViewCount,
-                                DateCreated = x.p.DateCreated,
-                                SeoAlias = x.pt.SeoAlias,
-                                SeoDescription = x.pt.SeoDescription,
-                                SeoTitle = x.pt.SeoTitle,
-                                Description = x.pt.Description,
-                                Details = x.pt.Details,
-                                Name = x.pt.Name,
-                                LanguageId = x.pt.LanguageId
-                            }).ToListAsync();
-            return data;
-        }
 
-        public async Task<PageResult<ProductViewModel>> GetAllByCategoryId(GetPublicProductPagingRequest request)
-        {
-            var query = from p in _context.Products
-                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        select new { p, pt, pic };
             if(request.CategoryId.HasValue && request.CategoryId.Value > 0)
             {
                 query = query.Where(x => x.pic.CategoryId == request.CategoryId);
             }
+            if (!string.IsNullOrEmpty(languageId))
+            {
+                query = query.Where(x => x.pt.LanguageId == languageId);
+            }
+
             int totalRows = await query.CountAsync();
             var data = await query.Skip((request.pageIndex - 1) * request.pageSize).Take(request.pageSize)
                             .Select(x => new ProductViewModel()
