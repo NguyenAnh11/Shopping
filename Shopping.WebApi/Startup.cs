@@ -13,25 +13,44 @@ using Shopping.Utilities.Constants;
 using Shopping.Application.Catalog.Products;
 using Microsoft.OpenApi.Models;
 using Shopping.Application.Catalog.Common;
+using Shopping.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Shopping.Application.Catalog.System.User;
+using Shopping.ViewModel.Common;
 
 namespace Shopping.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                            .SetBasePath(env.ContentRootPath)
+                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                            .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            Configuration = builder.Build();
         }
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            //ADD DBCONTEXT
             services.AddControllersWithViews();
             services.AddDbContext<ShoppingDBContext>(option => {
                 option.UseSqlServer(Configuration.GetConnectionString(SystemConstant.MainConnectionString));
             });
+            services.AddIdentity<AppUser, AppRole>()
+                    .AddEntityFrameworkStores<ShoppingDBContext>()
+                    .AddDefaultTokenProviders();
+            //ADD SERVICE
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+            services.AddTransient<IUserService, UserService>();
+
+            //ADD SWAGGER
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo()
@@ -46,6 +65,18 @@ namespace Shopping.WebApi
                     }
                 });
             });
+            //ADD PASSWORDIDENTITY OPTIONs
+            services.Configure<IdentityOptions>(option =>
+            {
+                //password
+                option.Password.RequireDigit = true;
+                option.Password.RequiredLength = 6;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+            });
+            //ADD CONFIGURATION
+            services.Configure<JwtOptionConfiguration>(this.Configuration.GetSection("Tokens"));
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
