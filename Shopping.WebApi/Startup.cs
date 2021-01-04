@@ -11,12 +11,15 @@ using Microsoft.Extensions.Hosting;
 using Shopping.Data.EF;
 using Shopping.Utilities.Constants;
 using Shopping.Application.Catalog.Products;
-using Microsoft.OpenApi.Models;
 using Shopping.Application.Catalog.Common;
 using Shopping.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Shopping.Application.Catalog.System.User;
+using Shopping.WebApi.Extensions;
 using Shopping.ViewModel.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Shopping.WebApi
 {
@@ -38,8 +41,14 @@ namespace Shopping.WebApi
             services.AddDbContext<ShoppingDBContext>(option => {
                 option.UseSqlServer(Configuration.GetConnectionString(SystemConstant.MainConnectionString));
             });
-            services.AddIdentity<AppUser, AppRole>()
-                    .AddEntityFrameworkStores<ShoppingDBContext>()
+            services.AddIdentity<AppUser, AppRole>(option =>
+            {
+                option.Password.RequireDigit = true;
+                option.Password.RequiredLength = 6;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+            }) .AddEntityFrameworkStores<ShoppingDBContext>()
                     .AddDefaultTokenProviders();
             //ADD SERVICE
             services.AddTransient<IPublicProductService, PublicProductService>();
@@ -51,32 +60,35 @@ namespace Shopping.WebApi
             services.AddTransient<IUserService, UserService>();
 
             //ADD SWAGGER
-            services.AddSwaggerGen(option =>
+            services.AddSwaggerService();
+
+            //ADD CONFIGURATION OPTION
+            services.Configure<JwtOptionConfiguration>(Configuration.GetSection("Tokens"));
+
+            var jwtOption = new JwtOptionConfiguration();
+            Configuration.GetSection("Tokens").Bind(jwtOption);
+            byte[] signingKeyBytes = Encoding.UTF8.GetBytes(jwtOption.Key);
+
+            services.AddAuthentication(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo()
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(option =>
+            {
+                option.RequireHttpsMetadata = true;
+                option.SaveToken = true;
+                option.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    Version = "v1",
-                    Title = "Shopping API",
-                    Description = "A simple Shopping APi",
-                    Contact = new OpenApiContact()
-                    {
-                        Email = "anhnguyenviet11299@gmail.com",
-                        Name = "Viet Anh",
-                    }
-                });
+                    ValidateAudience = true,
+                    ValidAudience = jwtOption.Issuer,
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOption.Issuer,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
+                };
             });
-            //ADD PASSWORDIDENTITY OPTIONs
-            services.Configure<IdentityOptions>(option =>
-            {
-                //password
-                option.Password.RequireDigit = true;
-                option.Password.RequiredLength = 6;
-                option.Password.RequireLowercase = false;
-                option.Password.RequireUppercase = false;
-                option.Password.RequireNonAlphanumeric = false;
-            });
-            //ADD CONFIGURATION
-            services.Configure<JwtOptionConfiguration>(this.Configuration.GetSection("Tokens"));
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -88,7 +100,15 @@ namespace Shopping.WebApi
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseAuthentication();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseSwagger();
 
@@ -97,10 +117,6 @@ namespace Shopping.WebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Shopping V1");
                 c.RoutePrefix = string.Empty;
             });
-
-            app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

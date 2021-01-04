@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Shopping.Application.Catalog.Products;
 using Shopping.ViewModel.Catalog.Products;
 using Shopping.ViewModel.Catalog.ProductImages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shopping.WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IPublicProductService _publicProductService;

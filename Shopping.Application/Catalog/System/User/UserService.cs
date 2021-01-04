@@ -59,7 +59,7 @@ namespace Shopping.Application.Catalog.System.User
                 issuer:issuer,
                 audience:issuer,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(10),
+                expires: DateTime.Now.AddMinutes(20),
                 signingCredentials: credential);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
