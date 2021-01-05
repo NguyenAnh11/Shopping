@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +17,8 @@ using Shopping.ViewModel.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using FluentValidation.AspNetCore;
+using Shopping.ViewModel.Catalog.System.User.Validators;
 
 namespace Shopping.WebApi
 {
@@ -37,7 +36,8 @@ namespace Shopping.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             //ADD DBCONTEXT
-            services.AddControllersWithViews();
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+             
             services.AddDbContext<ShoppingDBContext>(option => {
                 option.UseSqlServer(Configuration.GetConnectionString(SystemConstant.MainConnectionString));
             });
@@ -50,6 +50,7 @@ namespace Shopping.WebApi
                 option.Password.RequireNonAlphanumeric = false;
             }) .AddEntityFrameworkStores<ShoppingDBContext>()
                     .AddDefaultTokenProviders();
+            
             //ADD SERVICE
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IStorageService, FileStorageService>();
